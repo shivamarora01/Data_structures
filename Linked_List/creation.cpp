@@ -75,6 +75,45 @@ void insertAtMiddle2(Node* &head, int position, int data){
     }
 }
 
+void deleltionByValue(Node* &head, int value){
+    cout<<"Delete value "<<value<<" from Linked List"<<endl;
+    Node* curr = head;
+    Node* prev = nullptr;
+    Node* ahead = nullptr;
+    while(curr->data != value){
+        prev = curr;
+        curr = curr->next;
+    }
+    ahead = curr->next;
+    if(prev == nullptr){
+        head = head->next;
+    }
+    else{
+        prev->next = ahead;
+    }
+}
+
+void deleltionByPosition(Node* &head, int position){
+    cout<<"Delete value by Position "<<position<<" from Linked List"<<endl;
+    Node* curr = head;
+    Node* prev = nullptr;
+    int count = 1;
+    Node* ahead = nullptr;
+    if(position == 1){
+        head = head->next;
+        delete curr;
+    }
+    else{
+    while(count <= position - 1){
+        prev = curr;
+        curr = curr->next;
+        count++;
+    }
+    ahead = curr->next;
+    prev->next = ahead;
+    }
+}
+
 void print(Node* head){
     Node* temp = head;
     while(temp != NULL){
@@ -105,8 +144,21 @@ int main(){
     print(head);
     insertAtMiddle2(head, 7, 15);
     print(head);
-    print(head);
     insertAtMiddle2(head, 1, -15);
+    print(head);
+    deleltionByValue(head, 10);
+    print(head);
+    deleltionByValue(head, 38);
+    print(head);
+    deleltionByValue(head, -15);
+    print(head);
+    deleltionByValue(head, 1);
+    print(head);
+    deleltionByPosition(head, 2);
+    print(head);
+    deleltionByPosition(head, 5);
+    print(head);
+    deleltionByPosition(head, 1);
     print(head);
     return 0;
 }
