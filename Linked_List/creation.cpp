@@ -114,6 +114,75 @@ void deleltionByPosition(Node* &head, int position){
     }
 }
 
+void reverseFromMiddle(Node* &head, int left, int right){
+    int count = 1;
+    Node* temp = head;
+    Node* prevLeft = nullptr;
+    while(count < right){
+        if(count < left){
+            prevLeft = temp;
+        }
+    temp = temp->next;
+    count++;
+    }
+    Node* mainRight;
+    Node* mainLeft;
+    Node* rightNext;
+    if(prevLeft == nullptr){
+         mainLeft = head;
+         head = temp;
+         mainRight = temp;
+         rightNext = temp->next;
+    }
+    else{
+    mainLeft = prevLeft->next;
+    mainRight = temp;
+    prevLeft->next = temp;
+    rightNext = temp->next;
+    }
+    int counter = 0;
+    Node* temp1 = mainLeft;
+    Node* prev = nullptr;
+    while(counter <= right-left){
+        Node* nextNode = temp1->next;
+        temp1->next = prev;
+        prev = temp1;
+        temp1 = nextNode;
+        counter++;
+    }
+    mainLeft->next = rightNext;
+}
+
+Node* rotateList(Node* head, int k){
+    int n = 0;
+    Node* temp = head;
+    Node* tail;
+    while(temp != nullptr){
+        n++;
+        tail = temp;
+        temp = temp->next;
+    }
+    cout<<"count "<<n<<endl;
+    k = k%n;
+    cout<<"updated k "<<k<<endl;
+    if(k == 0 || k == n){
+        return head;
+    }
+    int i = 1;
+    temp = head;
+    while(i < n-k){
+        temp = temp->next;
+        i++;
+    }
+    Node* lastBeforeRotate = temp;
+    cout<<"lastBeforeRotate "<<lastBeforeRotate->data<<endl;
+    Node* newHead = temp->next;
+    tail->next = head;
+    lastBeforeRotate->next = nullptr;
+    return newHead;
+}
+
+
 void print(Node* head){
     Node* temp = head;
     while(temp != NULL){
@@ -160,5 +229,17 @@ int main(){
     print(head);
     deleltionByPosition(head, 1);
     print(head);
+    insertAtMiddle(head, 1, 2);
+    print(head);
+    insertAtMiddle2(head, 5, 25);
+    print(head);
+    // reverseFromMiddle(head, 2, 4);
+    // print(head);
+    reverseFromMiddle(head, 1, 4);
+    print(head);
+    reverseFromMiddle(head, 1, 4);
+    print(head);
+    Node* newHead = rotateList(head, 3);
+    print(newHead);
     return 0;
 }
